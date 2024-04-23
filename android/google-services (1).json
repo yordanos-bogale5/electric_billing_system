@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "425609859734",
+    "firebase_url": "https://electric-billing-system-4356f-default-rtdb.firebaseio.com",
+    "project_id": "electric-billing-system-4356f",
+    "storage_bucket": "electric-billing-system-4356f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:425609859734:android:834a548a8616c0586e28b7",
+        "android_client_info": {
+          "package_name": "com.project.billing_sytem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "425609859734-3obv9n125q5riduvbfi9cjgh08hlpgrs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhDM3sWIBxN-_0lVLHu9ffmNMPOzhxnEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "425609859734-3obv9n125q5riduvbfi9cjgh08hlpgrs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
