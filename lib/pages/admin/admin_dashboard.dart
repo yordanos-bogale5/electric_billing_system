@@ -1,6 +1,8 @@
 // ignore_for_file: avoid_print
 
-import 'package:billing_sytem/pages/admin/ops.dart';
+
+import 'package:billing_sytem/pages/employe/crud.dart';
+import 'package:billing_sytem/pages/employe/employee_list.dart';
 import 'package:flutter/material.dart';
 
 import '../employe/employee.dart';
@@ -63,7 +65,7 @@ class AdminDashboard extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>  EmployeeCrudOps(),
+                          builder: (context) =>  const InstCrudOps(),
                         ),
                       );
                       break;

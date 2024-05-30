@@ -222,8 +222,8 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           bottomNavigationBar: CurvedNavigationBar(
-  backgroundColor: isDarkMode ? Colors.black : Colors.white,
-  color: isLightMode ? Colors.white : Colors.blue,
+          backgroundColor: isDarkMode ? Colors.black : Colors.white,
+          color: isLightMode ? Colors.white : Colors.blue,
   items: const [
    // Icon(Icons.electrical_services_outlined, size: 30),
     Icon(Icons.home, size: 30),
@@ -242,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // Navigate to Home screen
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
         );
         break;
       case 1:

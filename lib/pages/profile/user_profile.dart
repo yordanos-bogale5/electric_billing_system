@@ -61,7 +61,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Stack(
               alignment: Alignment.center,
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 60,
                 //  backgroundImage: _profileImage != null ? FileImage(_profileImage!) : const AssetImage('assets/profile_pic.jpg'),
                 ),
@@ -72,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onTap: _pickImage,
                     child: Container(
                       padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.blue,
                         shape: BoxShape.circle,
                       ),

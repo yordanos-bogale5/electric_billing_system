@@ -1,15 +1,15 @@
 // ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
 
+import 'package:billing_sytem/pages/admin/admin_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 import '../../common/custom_btn.dart';
-
 import '../home.dart';
 import 'forget_password.dart';
 import 'google_sign_in.dart';
 import 'sign_up.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -31,19 +31,28 @@ class _LoginScreenState extends State<LoginScreen> {
         isLoading = true;
       });
 
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-      User? user = userCredential.user;
-
-      if (user != null) {
-        Navigator.push(
+      if (emailController.text == 'admin1@gmail.com' && passwordController.text == 'Admin123') {
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const HomeScreen (),
+            builder: (context) => const AdminDashboard(),
           ),
         );
+      } else {
+        UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+        User? user = userCredential.user;
+
+        if (user != null) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomeScreen(),
+            ),
+          );
+        }
       }
     } catch (e) {
       print("Error logging in: $e");
@@ -83,7 +92,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: 100.0,
                   height: 100.0,
                 ),
-                
                 const SizedBox(height: 26.0),
                 ElevatedButton.icon(
                   onPressed: isLoading
@@ -98,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>const HomeScreen (),
+                                builder: (context) => const HomeScreen(),
                               ),
                             );
                           } catch (e) {
@@ -163,10 +171,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextFormField(
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
-                  
                   decoration: InputDecoration(
                     labelText: 'Email',
-                   
                     prefixIcon: const Icon(Icons.email),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -255,8 +261,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     padding: const EdgeInsets.symmetric(
-                        vertical: 16.0,
-                        horizontal: 44.0),
+                        vertical: 16.0, horizontal: 44.0),
                   ),
                   child: Text(
                     isLoading ? 'Logging In...' : 'Log In',
@@ -271,9 +276,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: CircularProgressIndicator(),
                   ),
                 const SizedBox(height: 16.0),
-                _buildCreateAccountButton(MediaQuery.of(context)
-                    .size
-                    .width),
+                _buildCreateAccountButton(MediaQuery.of(context).size.width),
               ],
             ),
           ),
@@ -282,24 +285,23 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-Widget _buildForgotPasswordText() {
-  return GestureDetector(
-    onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const ForgotPasswordView(),
-        ),
-      );
-    },
-    child: const Text(
-      "Forgotten password?",
-      textAlign: TextAlign.right, // Align to the right
-      style: TextStyle(color: Colors.red, fontSize: 16),
-    ),
-  );
-}
-
+  Widget _buildForgotPasswordText() {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ForgotPasswordView(),
+          ),
+        );
+      },
+      child: const Text(
+        "Forgotten password?",
+        textAlign: TextAlign.right,
+        style: TextStyle(color: Colors.red, fontSize: 16),
+      ),
+    );
+  }
 
   Widget _buildCreateAccountButton(double width) {
     return GestureDetector(
