@@ -1,12 +1,8 @@
-// ignore_for_file: avoid_print
-
-
+import 'package:billing_sytem/pages/admin/report.dart';
+import 'package:billing_sytem/pages/admin/view_complain.dart';
+import 'package:billing_sytem/pages/auth/log_in.dart';
 import 'package:billing_sytem/pages/employe/crud.dart';
-import 'package:billing_sytem/pages/employe/employee_list.dart';
 import 'package:flutter/material.dart';
-
-import '../employe/employee.dart';
-
 
 
 void main() {
@@ -20,7 +16,6 @@ class AdminDashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-
       home: WillPopScope(
         onWillPop: () async {
           // Handle back button press
@@ -29,7 +24,7 @@ class AdminDashboard extends StatelessWidget {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Adimin DashBoard'),
+            title: const Text('Admin Dashboard'),
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
@@ -38,6 +33,30 @@ class AdminDashboard extends StatelessWidget {
                 Navigator.pop(context); // Navigate back
               },
             ),
+            actions: [
+              PopupMenuButton(
+                itemBuilder: (BuildContext context) {
+                  return [
+                    PopupMenuItem(
+                      child: ListTile(
+                        leading: const Icon(Icons.logout),
+                        title: const Text('Log out'),
+                        onTap: () {
+                          // Handle logout
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginScreen(), // Navigate to LoginScreen
+                            ),
+                            (route) => false, // Pop all routes until the LoginScreen
+                          );
+                        },
+                      ),
+                    ),
+                  ];
+                },
+              ),
+            ],
           ),
           body: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -45,56 +64,45 @@ class AdminDashboard extends StatelessWidget {
               crossAxisSpacing: 7.0,
               mainAxisSpacing: 0.0,
             ),
-            itemCount: 4,
+            itemCount: 3,
             itemBuilder: (BuildContext context, int index) {
               List<String> texts = [
                 'Employee',
-                'User',
-                'View complanits',
+                'View complaints',
                 'View Report',
-                
               ];
 
               return InkWell(
                 onTap: () {
                   // Handle card tap
                   print('Tapped on card ${index + 1}');
-                  // Navigate to the corresponding Dart file
+                  // Navigate to the corresponding screen
                   switch (index) {
                     case 0:
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>  const InstCrudOps(),
+                          builder: (context) => EmpCrudOps(),
                         ),
                       );
                       break;
+                    
                     case 1:
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>  DashboardScreen(),
+                          builder: (context) =>  ViewComplain(customerId: '', complaintLevel: '', complaintType: '', description: '', attachments: const [],),
                         ),
                       );
                       break;
-                      case 2:
+                    case 2:
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>  DashboardScreen(),
+                          builder: (context) => ReportScreen(),
                         ),
                       );
                       break;
-                      case 3:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DashboardScreen(),
-                        ),
-                      );
-                  
-                      
-                    // Add cases for other cards
                     default:
                       break;
                   }

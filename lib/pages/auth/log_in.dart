@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
 
 import 'package:billing_sytem/pages/admin/admin_dashboard.dart';
+import 'package:billing_sytem/pages/employe/employee.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -24,44 +25,60 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
   bool rememberMe = false;
+Future<void> loginUser() async {
+  try {
+    setState(() {
+      isLoading = true;
+    });
 
-  Future<void> loginUser() async {
-    try {
-      setState(() {
-        isLoading = true;
-      });
+    if (emailController.text == 'admin1@gmail.com' && passwordController.text == 'Admin123') {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const AdminDashboard(),
+        ),
+      );
+    } else if (emailController.text == 'employee1@gmail.com' && passwordController.text == 'Employee123') {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>  EmployeeDashboardScreen(),
+        ),
+      );
+    } else if (emailController.text == 'employee2@gmail.com' && passwordController.text == 'Employee123') {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>  EmployeeDashboardScreen(),
+        ),
+      );
+    } else {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text, // Use passwordController.text here
+      );
+      User? user = userCredential.user;
 
-      if (emailController.text == 'admin1@gmail.com' && passwordController.text == 'Admin123') {
+      if (user != null) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const AdminDashboard(),
+            builder: (context) => const HomeScreen(),
           ),
         );
-      } else {
-        UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
-        );
-        User? user = userCredential.user;
-
-        if (user != null) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
-            ),
-          );
-        }
       }
-    } catch (e) {
-      print("Error logging in: $e");
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
     }
+  } catch (e) {
+    print("Error logging in: $e");
+  } finally {
+    setState(() {
+      isLoading = false;
+    });
   }
+}
+
+
+
 
   bool isPasswordVisible = false;
   @override

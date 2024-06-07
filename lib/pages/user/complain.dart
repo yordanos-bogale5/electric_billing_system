@@ -1,3 +1,4 @@
+import 'package:billing_sytem/pages/admin/view_complain.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 
@@ -11,6 +12,10 @@ class ComplainScreen extends StatefulWidget {
 class _ComplainScreenState extends State<ComplainScreen> {
   List<PlatformFile>? _files = [];
   final _formKey = GlobalKey<FormState>();
+  final _customerIdController = TextEditingController();
+  final _complaintLevelController = TextEditingController();
+  final _complaintTypeController = TextEditingController();
+  final _descriptionController = TextEditingController();
 
   Future<void> _pickFiles() async {
     try {
@@ -44,6 +49,15 @@ class _ComplainScreenState extends State<ComplainScreen> {
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    _customerIdController.dispose();
+    _complaintLevelController.dispose();
+    _complaintTypeController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
   }
 
   @override
@@ -92,6 +106,7 @@ class _ComplainScreenState extends State<ComplainScreen> {
                   ),
                 ),
                 TextFormField(
+                  controller: _customerIdController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                   ),
@@ -111,6 +126,7 @@ class _ComplainScreenState extends State<ComplainScreen> {
                   ),
                 ),
                 TextFormField(
+                  controller: _complaintLevelController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                   ),
@@ -140,7 +156,9 @@ class _ComplainScreenState extends State<ComplainScreen> {
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                   ),
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    _complaintTypeController.text = value ?? '';
+                  },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please select a complaint type';
@@ -157,6 +175,7 @@ class _ComplainScreenState extends State<ComplainScreen> {
                   ),
                 ),
                 TextFormField(
+                  controller: _descriptionController,
                   maxLines: 5,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -206,7 +225,18 @@ class _ComplainScreenState extends State<ComplainScreen> {
                     ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          // Add functionality to submit the complaint
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ViewComplain(
+                                customerId: _customerIdController.text,
+                                complaintLevel: _complaintLevelController.text,
+                                complaintType: _complaintTypeController.text,
+                                description: _descriptionController.text,
+                                attachments: _files!,
+                              ),
+                            ),
+                          );
                         }
                       },
                       child: const Text('Submit'),

@@ -2,14 +2,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class InstCrudOps extends StatefulWidget {
-  const InstCrudOps({Key? key}) : super(key: key);
+class EmpCrudOps extends StatefulWidget {
+  const EmpCrudOps({Key? key}) : super(key: key);
 
   @override
-  State<InstCrudOps> createState() => _MyWidgetState();
+  State<EmpCrudOps> createState() => _MyWidgetState();
 }
 
-class _MyWidgetState extends State<InstCrudOps> {
+class _MyWidgetState extends State<EmpCrudOps> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _fatherNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -32,7 +32,7 @@ class _MyWidgetState extends State<InstCrudOps> {
 
   Future<void> _loadItems() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? items = prefs.getString('instructors');
+    String? items = prefs.getString('employees');
     if (items != null) {
       setState(() {
         _items = List<Map<String, dynamic>>.from(json.decode(items));
@@ -42,7 +42,7 @@ class _MyWidgetState extends State<InstCrudOps> {
 
   Future<void> _saveItems() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('instructors', json.encode(_items));
+    prefs.setString('employees', json.encode(_items));
   }
 
   Future<void> _create([Map<String, dynamic>? item]) async {
@@ -75,7 +75,7 @@ class _MyWidgetState extends State<InstCrudOps> {
               children: [
                 Center(
                   child: Text(
-                    item == null ? "Add Instructor" : "Update Instructor",
+                    item == null ? "Add Employee" : "Update Employee",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),

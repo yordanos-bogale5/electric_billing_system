@@ -2,20 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'auth/log_in.dart';
 
-
-
 import 'profile/user_profile.dart';
 import 'user/bill_status_detail.dart';
 import 'user/complain.dart';
 
 import 'user/bill_payment.dart';
-
+import 'user/user.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _HomeScreenState createState() => _HomeScreenState();
 }
 
@@ -25,6 +22,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<String> titles = ['Complain', 'Bill Status', 'Pay Bill'];
   List<String> imagePaths = ['assets/compliance.jpg', 'assets/electricitybill.png', 'assets/pay Bill.jpg'];
+
+  Users? selectedUser; // Define selectedUser variable here
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.grey,
                   ),
                 ),
-             
               ],
             ),
             elevation: 0,
@@ -161,19 +159,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         case 0:
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => ComplainScreen()),
+                            MaterialPageRoute(builder: (context) => const ComplainScreen()),
                           );
                           break;
-                        case 1:
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) =>BillStatusScreen(status: '',)),
-                          );
-                          break;
+                       case 1:
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => BillStatusScreen(users: const [], billAmount: 9,),),
+  );
+  break;
+
                         case 2:
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) =>const BillScreen ()),
+                            MaterialPageRoute(builder: (context) => const BillScreen (name: '', referenceNumber: '', billAmount: 0.0,)), // Change `billAmount: null` to `billAmount: 0.0`
                           );
                           break;
                       }
@@ -222,40 +221,31 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           bottomNavigationBar: CurvedNavigationBar(
-          backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          color: isLightMode ? Colors.white : Colors.blue,
-  items: const [
-   // Icon(Icons.electrical_services_outlined, size: 30),
-    Icon(Icons.home, size: 30),
-    Icon(Icons.person, size: 30),
-  ],
-  onTap: (index) {
-    switch(index) {
-      // case 0:
-      //   // Navigate to Electrical Services screen
-      //   Navigator.push(
-      //     context,
-      //     MaterialPageRoute(builder: (context) =>  HomeScreen()),
-      //   );
-      //   break;
-      case 0:
-        // Navigate to Home screen
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
-        );
-        break;
-      case 1:
-        // Navigate to Profile screen
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ProfileScreen()),
-        );
-        break;
-    }
-  },
-),
-
+            backgroundColor: isDarkMode ? Colors.black : Colors.white,
+            color: isLightMode ? Colors.white : Colors.blue,
+            items: const [
+              Icon(Icons.home, size: 30),
+              Icon(Icons.person, size: 30),
+            ],
+            onTap: (index) {
+              switch(index) {
+                case 0:
+                  // Navigate to Home screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  );
+                  break;
+                case 1:
+                  // Navigate to Profile screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProfileScreen()),
+                  );
+                  break;
+              }
+            },
+          ),
         ),
       ),
     );
@@ -274,7 +264,8 @@ class _HomeScreenState extends State<HomeScreen> {
   RoundedRectangleBorder _buildCardShape(int index) {
     switch (index) {
       case 1:
-        return RoundedRectangleBorder(
+        return RoundedRectangleBorder
+(
           borderRadius: BorderRadius.circular(5.0),
           side: const BorderSide(
             color: Color.fromRGBO(255, 111, 0, 1),
